@@ -1,0 +1,86 @@
+[gpg]
+	format = ssh
+
+; [commit]
+; 	gpgsign = true
+
+[pretty]
+    slog = format:%C(yellow)%h %Cred%as %Cblue%an%Cgreen%d %Creset%s
+
+[alias]
+    # staging
+    a = add
+    ap = add -p
+    af = "!f() { git add $(fzf --multi --height 40% --border); }; f"
+
+    u = restore --staged
+    uf = "!f() { git restore --staged $(git diff --name-only --cached | fzf --multi --height 40% --border); }; f"
+
+    # status
+	st = status
+
+    # restore a file
+    rt = restore
+
+    # fetch 
+    fe = fetch
+    fea = fetch --all
+
+    # pull
+    pl = pull
+
+    # push
+    ps = push
+    psf = push --force
+
+    # reset
+    rz = reset
+    rzh = reset --hard
+    rzs = reset --soft
+    rzs1 = reset --soft HEAD~1
+
+    # rebase
+    rb = rebase
+    rbi = rebase -i
+    rbf = "!f() { git rebase -i $(git log --oneline --reverse | fzf --height 40% --border | awk '{print $1}'); }; f"
+    rbias = rebase -i --autosquash
+
+    # checkout
+    co = checkout
+    cof = "!f() { git checkout $(git branch --all | fzf --height 40% --border | sed 's/\\* //'); }; f"
+    cob = checkout -b
+
+    br = branch
+    sw = switch
+    swf = "!f() { git switch $(git branch --all | fzf --height 40% --border | sed 's/\\* //'); }; f"
+
+    # commit
+    cm = commit
+    cmm = commit -m
+    cma = commit --amend
+    cmane = commit --amend --no-edit
+    cmfx = commit --fixup
+    cmfxf = "!f() { git commit --fixup $(git log --oneline | fzf --height 40% --border | awk '{print $1}'); }; f"
+    acp = !git add . && git cmane && git psf
+
+    # log
+    lo = log --oneline
+    l1 = log -1 --pretty=slog
+    l5 = log -5 --pretty=slog 
+    slog = log --pretty=slog
+
+    graph = log --oneline --simplify-by-decoration --graph --all
+
+    # show
+    sh = show
+    shf = "!f() { git log --oneline --all | fzf --height 40% --border | awk '{print $1}' | xargs git show; }; f"
+
+    # diff 
+    # of last commit
+    dlc = diff --cached HEAD^
+
+[init]
+	defaultBranch = main
+[user]
+	email = 39973141+jntille@users.noreply.github.com
+	name = jntille
